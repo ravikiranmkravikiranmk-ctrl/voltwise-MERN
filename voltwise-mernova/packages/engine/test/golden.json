@@ -1,0 +1,140 @@
+{
+  "note": "Golden values computed with the original Python engine (loadcalc) before the port, so the JS and Dart engines can be checked against the reference implementation.",
+  "sampleCsv": "name,quantity,rated_kw,power_factor,demand_factor,phases\nBorewell pumps,4,7.5,0.82,0.75,3\nAir conditioners,10,2.2,0.9,0.8,1\nLighting,1,12,0.95,0.9,1\nLift,2,11,0.8,0.5,3\nWorkshop machines,6,5.5,0.8,0.6,3\nSocket outlets,1,15,0.9,0.4,1\n",
+  "sampleSettings": {
+    "voltage": 415,
+    "phases": 3,
+    "diversityFactor": 1.15,
+    "derating": 0.9,
+    "maxVdPct": 3,
+    "cableLengthM": 60,
+    "maxRuns": 4,
+    "maxLoading": 0.8,
+    "futureMargin": 0.2
+  },
+  "expected": {
+    "summary": {
+      "connectedKw": 134.0,
+      "demandKw": 87.7,
+      "demandKvar": 53.78,
+      "demandKva": 102.88,
+      "overallPf": 0.852,
+      "maxDemandKva": 89.46
+    },
+    "feederCurrent": 124.46,
+    "cableSizeSqmm": 35,
+    "cableRuns": 1,
+    "cableDeratedCapacityA": 132.3,
+    "cableVoltageDropPct": 1.91,
+    "cableLimitedBy": "current",
+    "transformerKva": 160,
+    "transformerLoadingPct": 55.9
+  },
+  "vectors": [
+    {
+      "fn": "lineCurrent",
+      "input": {
+        "kw": 100,
+        "voltage": 415,
+        "powerFactor": 0.8,
+        "phases": 3
+      },
+      "expected": 173.9007
+    },
+    {
+      "fn": "lineCurrent",
+      "input": {
+        "kw": 2.3,
+        "voltage": 230,
+        "powerFactor": 1.0,
+        "phases": 1
+      },
+      "expected": 10.0
+    },
+    {
+      "fn": "voltageDropPercent",
+      "input": {
+        "current": 100,
+        "lengthM": 50,
+        "sizeSqmm": 35,
+        "voltage": 415,
+        "powerFactor": 0.85,
+        "phases": 3,
+        "runs": 1
+      },
+      "expected": 1.2761
+    },
+    {
+      "fn": "voltageDropPercent",
+      "input": {
+        "current": 100,
+        "lengthM": 50,
+        "sizeSqmm": 35,
+        "voltage": 415,
+        "powerFactor": 0.85,
+        "phases": 1,
+        "runs": 1
+      },
+      "expected": 1.4735
+    },
+    {
+      "fn": "selectCable",
+      "input": {
+        "current": 100,
+        "lengthM": 20,
+        "voltage": 415,
+        "powerFactor": 0.85
+      },
+      "expected": {
+        "sizeSqmm": 25,
+        "runs": 1,
+        "limitedBy": "current"
+      }
+    },
+    {
+      "fn": "selectCable",
+      "input": {
+        "current": 100,
+        "lengthM": 400,
+        "voltage": 415,
+        "powerFactor": 0.85,
+        "maxVdPct": 3
+      },
+      "expected": {
+        "sizeSqmm": 150,
+        "runs": 1,
+        "limitedBy": "voltage drop"
+      }
+    },
+    {
+      "fn": "selectCable",
+      "input": {
+        "current": 900,
+        "lengthM": 30,
+        "voltage": 415,
+        "powerFactor": 0.9
+      },
+      "expected": {
+        "sizeSqmm": 240,
+        "runs": 2,
+        "limitedBy": "current"
+      }
+    },
+    {
+      "fn": "selectTransformer",
+      "input": {
+        "maxDemandKva": 300
+      },
+      "expected": 500
+    },
+    {
+      "fn": "selectTransformer",
+      "input": {
+        "maxDemandKva": 630,
+        "maxLoading": 1.0,
+        "futureMargin": 0
+      },
+      "expected": 630
+    }
+  ]
+}

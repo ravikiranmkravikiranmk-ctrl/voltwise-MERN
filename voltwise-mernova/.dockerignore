@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/.data
+**/.dart_tool
+**/build
+mobile
+.git
+.github
+docs
+*.md
+!README.md

@@ -1,0 +1,45 @@
+# Sample requests — install the "REST Client" extension and click "Send Request".
+@host = http://localhost:4000/api
+
+### Health
+GET {{host}}/health
+
+### Reference data (cable table, transformer ratings, defaults)
+GET {{host}}/reference
+
+### Estimate a schedule
+POST {{host}}/estimate
+content-type: application/json
+
+{
+  "loads": [
+    { "name": "Borewell pumps", "quantity": 4, "ratedKw": 7.5, "powerFactor": 0.82, "demandFactor": 0.75, "phases": 3 },
+    { "name": "Air conditioners", "quantity": 10, "ratedKw": 2.2, "powerFactor": 0.9, "demandFactor": 0.8, "phases": 1 },
+    { "name": "Lighting", "quantity": 1, "ratedKw": 12, "powerFactor": 0.95, "demandFactor": 0.9, "phases": 1 }
+  ],
+  "settings": { "voltage": 415, "diversityFactor": 1.15, "derating": 0.9, "cableLengthM": 60 }
+}
+
+### Import a CSV schedule
+POST {{host}}/import/csv
+content-type: text/csv
+
+name,quantity,rated_kw,power_factor,demand_factor,phases
+Borewell pumps,4,7.5,0.82,0.75,3
+Lighting,1,12,0.95,0.9,1
+
+### List projects
+GET {{host}}/projects
+
+### Create a project
+POST {{host}}/projects
+content-type: application/json
+
+{
+  "name": "Sample apartment block",
+  "client": "Demo",
+  "loads": [
+    { "name": "Borewell pumps", "quantity": 4, "ratedKw": 7.5, "powerFactor": 0.82, "demandFactor": 0.75 }
+  ],
+  "settings": { "voltage": 415, "diversityFactor": 1.15, "cableLengthM": 60 }
+}

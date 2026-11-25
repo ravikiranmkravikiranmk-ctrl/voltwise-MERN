@@ -1,0 +1,10 @@
+name,quantity,rated_kw,power_factor,demand_factor,phases,category,panel,length_m
+Borewell pumps,4,7.5,0.82,0.75,3,motor,MCC-1,80
+Air conditioners,10,2.2,0.9,0.8,1,hvac,DB-2,
+Lighting,1,12,0.95,0.9,1,lighting,LDB,
+Lift,2,11,0.8,0.5,3,lift,MCC-1,45
+Workshop machines,6,5.5,0.8,0.6,3,process,PDB-1,
+Socket outlets,1,15,0.9,0.4,1,sockets,DB-2,
+Fire pump,1,37,0.85,1,3,motor,MCC-2,60
+EV charger 60kW,2,60,0.98,0.8,3,ev,EV-DB,90
+UPS & server room,1,10,0.95,1,3,it,DB-3,

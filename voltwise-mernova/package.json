@@ -1,0 +1,32 @@
+{
+  "name": "voltwise-mernova",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Voltwise \u2014 Electrical Load & Cable Sizing Estimator. MERN (MongoDB, Express, React, Node) API + web client with a Flutter mobile app.",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "backend",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=backend",
+    "dev:all": "concurrently -k -n api,web -c cyan,magenta \"npm:dev\" \"npm:dev:web\"",
+    "dev:full": "concurrently -k -n api,web,mobile -c cyan,magenta,green \"npm:dev\" \"npm:dev:web\" \"npm:dev:mobile\"",
+    "dev:web": "npm run dev --workspace=web",
+    "dev:mobile": "cd mobile && flutter run",
+    "build": "npm run build --workspace=web",
+    "start": "npm run start --workspace=backend",
+    "serve": "npm run build && npm start",
+    "test": "npm run test --workspace=@voltwise/engine && npm run test --workspace=backend",
+    "test:mobile": "cd mobile && flutter test",
+    "seed": "npm run seed --workspace=backend"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  }
+}
